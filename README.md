@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Common Form
 
-## Getting Started
+A responsive storefront for thoughtfully selected everyday products, built with
+Next.js and MongoDB. The interface is intentionally calm and minimal: clear
+product photography, simple navigation, and an uncomplicated shopping bag.
 
-First, run the development server:
+## Features
+
+- MongoDB-backed product collection and individual product pages.
+- Related-product suggestions based on the current product category.
+- Persistent shopping bag with quantity controls, item removal, and an order
+  summary. The bag is stored in the shopper's browser using `localStorage`.
+- Saved light and dark appearance preferences, with support for the device's
+  current theme when no preference has been chosen.
+- Category browsing and product matching, with immediate ranked text matches
+  and semantic search for queries without a close text match.
+- Responsive collection, product, cart, and about pages.
+- Accessible navigation, focus states, reduced-motion support, and loading,
+  empty, and error states.
+
+Checkout, accounts, and payment processing are not part of this demo yet.
+
+## Tech stack
+
+- Next.js 16 App Router and React 19
+- MongoDB with Mongoose
+- OpenRouter AI embeddings for semantic product search
+- CSS Modules and responsive CSS
+
+## Getting started
+
+1. Install dependencies:
+
+   ```bash
+   npm ci
+   ```
+
+2. Configure `MONGO_URI` in your local `.env` or `.env.local` file. The example
+   file shows a local MongoDB URI; an Atlas connection string also works. Keep
+   real environment files private and never commit them.
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Visit [http://localhost:3000](http://localhost:3000).
+
+The catalog and cart pages require a reachable MongoDB instance. Semantic
+product matching uses `OPENROUTER_API_KEY` for queries without a close text
+match; ranked text matching works without it.
+
+## Demo catalog
+
+The existing seed endpoint creates sample products. After configuring
+`MONGO_URI`, call it once:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+curl http://localhost:3000/api/seed
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Caution:** this endpoint replaces the existing product collection. It is
+intended for local development only; do not expose it in a production
+deployment. If `OPENROUTER_API_KEY` is configured, the endpoint also creates
+embeddings for semantic search.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Route | Purpose |
+| --- | --- |
+| `/` | Storefront landing page |
+| `/shop` | Product collection, category filters, and semantic search |
+| `/products/[id]` | Product details and related products |
+| `/cart` | Saved shopping bag and order summary |
+| `/about` | About Common Form |
+| `/api/Products` | MongoDB product catalog |
+| `/api/ai-search` | Embedding-based product search |
+| `/api/seed` | Development-only sample catalog seeding |
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
