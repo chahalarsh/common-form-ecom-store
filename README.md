@@ -78,3 +78,4 @@ embeddings for semantic search.
 | `/api/ai-search` | Embedding-based product search |
 | `/api/seed` | Development-only sample catalog seeding |
 
+ - Some Endpoint won't work in Live app as the API is set to read only
